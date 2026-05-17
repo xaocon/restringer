@@ -9,3 +9,7 @@ build:
 
 test:
     npm run test
+
+[no-cd]
+run *ARGS: build
+    node {{ justfile_directory() }}/dist/bin/deobfuscate.js {{ ARGS }}

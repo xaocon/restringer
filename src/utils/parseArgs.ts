@@ -52,6 +52,7 @@ export function parseArgs(args) {
 	try {
 		// Pre-process to handle short option `=` syntax (e.g., -o=file.js, -m=2)
 		const processedArgs = preprocessShortOptionsWithEquals(args);
+		// const processedArgs = args;
 		
 		const program = new Command();
 		
@@ -91,10 +92,10 @@ export function parseArgs(args) {
 		if (hasHelp) {
 			argsToProcess = processedArgs.filter(arg => arg !== '-h' && arg !== '--help');
 		}
-
 		// Parse arguments and handle potential errors
+		let cmd;
 		try {
-			program.parse(argsToProcess, { from: 'user' });
+			cmd = program.parse(argsToProcess, { from: 'user' });
 		} catch (error) {
 			// Handle parsing errors (like invalid max-iterations value)
 			if (error.code === 'commander.helpDisplayed' || error.code === 'commander.version') {
@@ -137,6 +138,9 @@ export function parseArgs(args) {
 		// Validate required input filename (unless help is requested)
 		if (!hasHelp && (!opts.inputFilename || opts.inputFilename.length === 0)) {
 			throw new Error('missing required argument \'input_filename\'');
+		}
+		if (hasHelp) {
+			program.help();
 		}
 		
 		return opts;

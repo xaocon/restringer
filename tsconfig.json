@@ -5,8 +5,8 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "./src"
+    "rootDir": "./"
   },
   "extends": "@tsconfig/node24/tsconfig.json",
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts", "./bin/deobfuscate.ts"]
 }
