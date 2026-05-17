@@ -4,7 +4,7 @@
   "description": "Deobfuscate Javascript with emphasis on reconstructing strings",
   "main": "index.js",
   "type": "module",
-  "bin": "./bin/deobfuscate.js",
+  "bin": "./dist/src/bin/deobfuscate.js",
   "files": [
     "index.js",
     "bin",

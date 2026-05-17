@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // @ts-check 
 
-import {REstringer} from '../src/restringer.js';
-import {parseArgs} from '../src/utils/parseArgs.js';
+import {REstringer} from '../restringer.js';
+import {parseArgs} from '../utils/parseArgs.js';
 
 try {
 	const args = parseArgs(process.argv.slice(2));
