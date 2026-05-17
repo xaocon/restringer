@@ -26,7 +26,7 @@ function applyProcessors(arb, processors) {
 }
 
 describe('Processors tests: Augmented Array', async () => {
-	const targetProcessors = (await import('../src/processors/augmentedArray.js'));
+	const targetProcessors = (await import('../dist/processors/augmentedArray.js'));
 	it('TP-1: Complex IIFE with mixed array elements', () => {
 		const code = `const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'a', 'b', 'c'];
 (function (targetArray, numberOfShifts) {
@@ -220,7 +220,7 @@ shuffle(arr, 2);`;
 	});
 });
 describe('Processors tests: Caesar Plus', async () => {
-	const targetProcessors = (await import('../src/processors/caesarp.js'));
+	const targetProcessors = (await import('../dist/processors/caesarp.js'));
 	// TODO: Fix test
 	it.skip('TP-1: FIX ME', () => {
 		const code = `(function() {
@@ -241,7 +241,7 @@ describe('Processors tests: Caesar Plus', async () => {
 	});
 });
 describe('Processors tests: Function to Array', async () => {
-	const targetProcessors = (await import('../src/processors/functionToArray.js'));
+	const targetProcessors = (await import('../dist/processors/functionToArray.js'));
 	it('TP-1: Independent call', () => {
 		const code = `function getArr() {return ['One', 'Two', 'Three']} const a = getArr(); console.log(a[0] + ' + ' + a[1] + ' = ' + a[2]);`;
 		const expected  = `function getArr() {\n  return [\n    'One',\n    'Two',\n    'Three'\n  ];\n}\nconst a = [\n  'One',\n  'Two',\n  'Three'\n];\nconsole.log(a[0] + ' + ' + a[1] + ' = ' + a[2]);`;
@@ -293,7 +293,7 @@ describe('Processors tests: Function to Array', async () => {
 	});
 });
 describe('Processors tests: Obfuscator.io', async () => {
-	const targetProcessors = (await import('../src/processors/obfuscator.io.js'));
+	const targetProcessors = (await import('../dist/processors/obfuscator.io.js'));
 	it('TP-1', () => {
 		const code = `var a = {
   'removeCookie': function () {

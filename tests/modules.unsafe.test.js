@@ -24,7 +24,7 @@ function applyModuleToCode(code, func, looped = false) {
 }
 
 describe('UNSAFE: normalizeRedundantNotOperator', async () => {
-	const targetModule = (await import('../src/modules/unsafe/normalizeRedundantNotOperator.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/normalizeRedundantNotOperator.js')).default;
 	it('TP-1: Mixed literals and expressions', () => {
 		const code = `!true || !false || !0 || !1 || !a || !'a' || ![] || !{} || !-1 || !!true || !!!true`;
 		const expected = `false || true || true || false || !a || false || false || false || false || true || false;`;
@@ -99,7 +99,7 @@ describe('UNSAFE: normalizeRedundantNotOperator', async () => {
 	});
 });
 describe('UNSAFE: resolveAugmentedFunctionWrappedArrayReplacements', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveAugmentedFunctionWrappedArrayReplacements.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveAugmentedFunctionWrappedArrayReplacements.js')).default;
 	
 	it.todo('Add Missing True Positive Test Cases');
 	
@@ -177,7 +177,7 @@ describe('UNSAFE: resolveAugmentedFunctionWrappedArrayReplacements', async () =>
 
 });
 describe('UNSAFE: resolveBuiltinCalls', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveBuiltinCalls.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveBuiltinCalls.js')).default;
 	it('TP-1: atob', () => {
 		const code = `atob('c29sdmVkIQ==');`;
 		const expected = `'solved!';`;
@@ -264,7 +264,7 @@ describe('UNSAFE: resolveBuiltinCalls', async () => {
 	});
 });
 describe('UNSAFE: resolveDefiniteBinaryExpressions', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveDefiniteBinaryExpressions.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveDefiniteBinaryExpressions.js')).default;
 	it('TP-1: Mixed arithmetic and string operations', () => {
 		const code = `5 * 3; '2' + 2; '10' - 1; 'o' + 'k'; 'o' - 'k'; 3 - -1;`;
 		const expected = `15;\n'22';\n9;\n'ok';\nNaN;\n4;`;
@@ -339,7 +339,7 @@ describe('UNSAFE: resolveDefiniteBinaryExpressions', async () => {
 	});
 	
 	// Test the inlined helper function
-	const {doesBinaryExpressionContainOnlyLiterals} = await import('../src/modules/unsafe/resolveDefiniteBinaryExpressions.js');
+	const {doesBinaryExpressionContainOnlyLiterals} = await import('../dist/modules/unsafe/resolveDefiniteBinaryExpressions.js');
 	
 	it('Helper TP-1: Literal node', () => {
 		const ast = generateFlatAST(`'a'`);
@@ -417,7 +417,7 @@ describe('UNSAFE: resolveDefiniteBinaryExpressions', async () => {
 	});
 });
 describe('UNSAFE: resolveDefiniteMemberExpressions', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveDefiniteMemberExpressions.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveDefiniteMemberExpressions.js')).default;
 	it('TP-1: String and array indexing with properties', () => {
 		const code = `'123'[0]; 'hello'.length;`;
 		const expected = `'1';\n5;`;
@@ -498,7 +498,7 @@ describe('UNSAFE: resolveDefiniteMemberExpressions', async () => {
 	});
 });
 describe('UNSAFE: resolveDeterministicConditionalExpressions', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveDeterministicConditionalExpressions.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveDeterministicConditionalExpressions.js')).default;
 	it('TP-1: Boolean literals (true/false)', () => {
 		const code = `(true ? 1 : 2); (false ? 3 : 4);`;
 		const expected = `1;\n4;`;
@@ -591,7 +591,7 @@ describe('UNSAFE: resolveDeterministicConditionalExpressions', async () => {
 	});
 });
 describe('UNSAFE: resolveEvalCallsOnNonLiterals', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveEvalCallsOnNonLiterals.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveEvalCallsOnNonLiterals.js')).default;
 	it('TP-1: Function call that returns string', () => {
 		const code = `eval(function(a) {return a}('atob'));`;
 		const expected = `atob;`;
@@ -666,7 +666,7 @@ describe('UNSAFE: resolveEvalCallsOnNonLiterals', async () => {
 	});
 });
 describe('UNSAFE: resolveFunctionToArray', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveFunctionToArray.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveFunctionToArray.js')).default;
 	it('TP-1: Simple function returning array', () => {
 		const code = `function a() {return [1];}\nconst b = a();`;
 		const expected = `function a() {\n  return [1];\n}\nconst b = [1];`;
@@ -741,7 +741,7 @@ describe('UNSAFE: resolveFunctionToArray', async () => {
 	});
 });
 describe('UNSAFE: resolveInjectedPrototypeMethodCalls', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveInjectedPrototypeMethodCalls.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveInjectedPrototypeMethodCalls.js')).default;
 	it('TP-1: String prototype method injection', () => {
 		const code = `String.prototype.secret = function () {return 'secret ' + this;}; 'hello'.secret();`;
 		const expected = `String.prototype.secret = function () {\n  return 'secret ' + this;\n};\n'secret hello';`;
@@ -840,7 +840,7 @@ describe('UNSAFE: resolveInjectedPrototypeMethodCalls', async () => {
 	});
 });
 describe('UNSAFE: resolveLocalCalls', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveLocalCalls.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveLocalCalls.js')).default;
 	it('TP-1: Function declaration', () => {
 		const code = `function add(a, b) {return a + b;} add(1, 2);`;
 		const expected = `function add(a, b) {\n  return a + b;\n}\n3;`;
@@ -933,7 +933,7 @@ describe('UNSAFE: resolveLocalCalls', async () => {
 	});
 });
 describe('UNSAFE: resolveMinimalAlphabet', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveMinimalAlphabet.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveMinimalAlphabet.js')).default;
 	it('TP-1: Unary expressions on literals and arrays', () => {
 		const code = `+true; -true; +false; -false; +[]; ~true; ~false; ~[]; +[3]; +['']; -[4]; ![]; +[[]];`;
 		const expected = `1;\n-'1';\n0;\n-0;\n0;\n-'2';\n-'1';\n-'1';\n3;\n0;\n-'4';\nfalse;\n0;`;
@@ -985,7 +985,7 @@ describe('UNSAFE: resolveMinimalAlphabet', async () => {
 });
 
 describe('resolveMemberExpressionsLocalReferences (resolveMemberExpressionsLocalReferences.js)', async () => {
-	const targetModule = (await import('../src/modules/unsafe/resolveMemberExpressionsLocalReferences.js')).default;
+	const targetModule = (await import('../dist/modules/unsafe/resolveMemberExpressionsLocalReferences.js')).default;
 	it('TP-1: Array index access with literal', () => {
 		const code = `const a = [1, 2, 3]; const b = a[1];`;
 		const expected = `const a = [\n  1,\n  2,\n  3\n];\nconst b = 2;`;

@@ -1,4 +1,4 @@
-import {REstringer} from '../src/restringer.js';
+import {REstringer} from '../dist/restringer.js';
 import assert from 'node:assert';
 import {describe, it} from 'node:test';
 

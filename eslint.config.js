@@ -22,6 +22,7 @@ export default [
 			'**/*tmp*/',
 			"eslint.config.js",
 			"node_modules/",
+			"dist/**/*"
 		],
 	},
 	...compat.extends('eslint:recommended'),

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "./src"
+  },
+  "extends": "@tsconfig/node24/tsconfig.json",
+  "include": ["./src/**/*.ts"]
+}

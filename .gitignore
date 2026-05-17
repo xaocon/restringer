@@ -7,3 +7,6 @@ node_modules/
 .DS_Store
 *.heapsnapshot
 .cursor
+dist/
+.vscode/
+.zed/

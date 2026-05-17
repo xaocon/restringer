@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs';
 import {describe, it} from 'node:test';
 import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
-import {REstringer} from '../src/restringer.js';
+import {REstringer} from '../dist/restringer.js';
 
 function getDeobfuscatedCode(code) {
 	const restringer = new REstringer(code);

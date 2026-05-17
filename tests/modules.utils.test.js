@@ -2,10 +2,10 @@
 import assert from 'node:assert';
 import {generateFlatAST} from 'flast';
 import {describe, it, beforeEach} from 'node:test';
-import {BAD_VALUE} from '../src/modules/config.js';
+import {BAD_VALUE} from '../dist/modules/config.js';
 
 describe('UTILS: evalInVm', async () => {
-	const targetModule = (await import('../src/modules/utils/evalInVm.js')).evalInVm;
+	const targetModule = (await import('../dist/modules/utils/evalInVm.js')).evalInVm;
 	it('TP-1: String concatenation', () => {
 		const code = `'hello ' + 'there';`;
 		const expected = {type: 'Literal', value: 'hello there', raw: 'hello there'};
@@ -55,7 +55,7 @@ describe('UTILS: evalInVm', async () => {
 		assert.deepStrictEqual(result1, result2);
 	});
 	it('TP-9: Sandbox reuse', async () => {
-		const {Sandbox} = await import('../src/modules/utils/sandbox.js');
+		const {Sandbox} = await import('../dist/modules/utils/sandbox.js');
 		const sandbox = new Sandbox();
 		const code = `5 * 5`;
 		const expected = {type: 'Literal', value: 25, raw: '25'};
@@ -136,7 +136,7 @@ describe('UTILS: evalInVm', async () => {
 	});
 });
 describe('UTILS: areReferencesModified', async () => {
-	const targetModule = (await import('../src/modules/utils/areReferencesModified.js')).areReferencesModified;
+	const targetModule = (await import('../dist/modules/utils/areReferencesModified.js')).areReferencesModified;
 	it('TP-1: Update expression', () => {
 		const code = `let a = 1; let b = 2 + a, c = a + 3; a++;`;
 		const ast = generateFlatAST(code);
@@ -259,7 +259,7 @@ describe('UTILS: areReferencesModified', async () => {
 	});
 });
 describe('UTILS: createNewNode', async () => {
-	const targetModule = (await import('../src/modules/utils/createNewNode.js')).createNewNode;
+	const targetModule = (await import('../dist/modules/utils/createNewNode.js')).createNewNode;
 	it('Literan: String', () => {
 		const code = 'Baryo';
 		const expected = {type: 'Literal', value: 'Baryo', raw: 'Baryo'};
@@ -404,7 +404,7 @@ describe('UTILS: createNewNode', async () => {
 
 });
 describe('UTILS: doesDescendantMatchCondition', async () => {
-	const targetModule = (await import('../src/modules/utils/doesDescendantMatchCondition.js')).doesDescendantMatchCondition;
+	const targetModule = (await import('../dist/modules/utils/doesDescendantMatchCondition.js')).doesDescendantMatchCondition;
 	
 	it('TP-1: Find descendant by type (boolean return)', () => {
 		const code = `function test() { return this.prop; }`;
@@ -486,7 +486,7 @@ describe('UTILS: doesDescendantMatchCondition', async () => {
 });
 
 describe('UTILS: generateHash', async () => {
-	const targetModule = (await import('../src/modules/utils/generateHash.js')).generateHash;
+	const targetModule = (await import('../dist/modules/utils/generateHash.js')).generateHash;
 	
 	it('TP-1: Generate hash for normal string', () => {
 		const input = 'const a = 1;';
@@ -549,7 +549,7 @@ describe('UTILS: generateHash', async () => {
 });
 
 describe('UTILS: createOrderedSrc', async () => {
-	const targetModule = (await import('../src/modules/utils/createOrderedSrc.js')).createOrderedSrc;
+	const targetModule = (await import('../dist/modules/utils/createOrderedSrc.js')).createOrderedSrc;
 	it('TP-1: Re-order nodes', () => {
 		const code = 'a; b;';
 		const expected = `a\nb\n`;
@@ -715,7 +715,7 @@ describe('UTILS: createOrderedSrc', async () => {
 });
 
 describe('UTILS: getCache', async () => {
-	const getCache = (await import('../src/modules/utils/getCache.js')).getCache;
+	const getCache = (await import('../dist/modules/utils/getCache.js')).getCache;
 	
 	// Reset cache before each test to ensure isolation
 	beforeEach(() => {
@@ -839,7 +839,7 @@ describe('UTILS: getCache', async () => {
 	});
 });
 describe('UTILS: getCalleeName', async () => {
-	const targetModule = (await import('../src/modules/utils/getCalleeName.js')).getCalleeName;
+	const targetModule = (await import('../dist/modules/utils/getCalleeName.js')).getCalleeName;
 	it('TP-1: Simple identifier callee', () => {
 		const code = `func();`;
 		const ast = generateFlatAST(code);
@@ -942,8 +942,8 @@ describe('UTILS: getCalleeName', async () => {
 	});
 });
 describe('UTILS: getDeclarationWithContext', async () => {
-	const targetModule = (await import('../src/modules/utils/getDeclarationWithContext.js')).getDeclarationWithContext;
-	const getCache = (await import('../src/modules/utils/getCache.js')).getCache;
+	const targetModule = (await import('../dist/modules/utils/getDeclarationWithContext.js')).getDeclarationWithContext;
+	const getCache = (await import('../dist/modules/utils/getCache.js')).getCache;
 	beforeEach(() => {
 		getCache.flush();
 	});
@@ -1027,7 +1027,7 @@ describe('UTILS: getDeclarationWithContext', async () => {
 	});
 });
 describe('UTILS: getDescendants', async () => {
-	const targetModule = (await import('../src/modules/utils/getDescendants.js')).getDescendants;
+	const targetModule = (await import('../dist/modules/utils/getDescendants.js')).getDescendants;
 	it('TP-1', () => {
 		const code = `a + b;`;
 		const ast = generateFlatAST(code);
@@ -1121,7 +1121,7 @@ describe('UTILS: getDescendants', async () => {
 	});
 });
 describe('UTILS: getMainDeclaredObjectOfMemberExpression', async () => {
-	const targetModule = (await import('../src/modules/utils/getMainDeclaredObjectOfMemberExpression.js')).getMainDeclaredObjectOfMemberExpression;
+	const targetModule = (await import('../dist/modules/utils/getMainDeclaredObjectOfMemberExpression.js')).getMainDeclaredObjectOfMemberExpression;
 	it('TP-1: Simple member expression with declared object', () => {
 		const code = `a.b;`;
 		const ast = generateFlatAST(code);
@@ -1188,7 +1188,7 @@ describe('UTILS: getMainDeclaredObjectOfMemberExpression', async () => {
 	});
 });
 describe('UTILS: getObjType', async () => {
-	const targetModule = (await import('../src/modules/utils/getObjType.js')).getObjType;
+	const targetModule = (await import('../dist/modules/utils/getObjType.js')).getObjType;
 	it('TP-1: Detect Array type', () => {
 		const result = targetModule([1, 2, 3]);
 		assert.strictEqual(result, 'Array');
@@ -1255,7 +1255,7 @@ describe('UTILS: getObjType', async () => {
 	});
 });
 describe('UTILS: isNodeInRanges', async () => {
-	const targetModule = (await import('../src/modules/utils/isNodeInRanges.js')).isNodeInRanges;
+	const targetModule = (await import('../dist/modules/utils/isNodeInRanges.js')).isNodeInRanges;
 	it('TP-1: Node completely within single range', () => {
 		const code = `a.b;`;
 		const ast = generateFlatAST(code);
@@ -1321,7 +1321,7 @@ describe('UTILS: isNodeInRanges', async () => {
 	});
 });
 describe('UTILS: Sandbox', async () => {
-	const {Sandbox} = await import('../src/modules/utils/sandbox.js');
+	const {Sandbox} = await import('../dist/modules/utils/sandbox.js');
 	it('TP-1: Basic code execution', () => {
 		const sandbox = new Sandbox();
 		const result = sandbox.run('2 + 3');

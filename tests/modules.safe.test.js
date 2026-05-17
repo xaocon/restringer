@@ -24,7 +24,7 @@ function applyModuleToCode(code, func, looped = false) {
 }
 
 describe('SAFE: removeRedundantBlockStatements', async () => {
-	const targetModule = (await import('../src/modules/safe/removeRedundantBlockStatements.js')).default;
+	const targetModule = (await import('../dist/modules/safe/removeRedundantBlockStatements.js')).default;
 	it('TP-1', () => {
 		const code = `if (a) {{do_a();}}`;
 		const expected = `if (a) {\n  do_a();\n}`;
@@ -51,7 +51,7 @@ describe('SAFE: removeRedundantBlockStatements', async () => {
 	});
 });
 describe('SAFE: normalizeComputed', async () => {
-	const targetModule = (await import('../src/modules/safe/normalizeComputed.js')).default;
+	const targetModule = (await import('../dist/modules/safe/normalizeComputed.js')).default;
 	it('TP-1: Convert valid string identifiers to dot notation', () => {
 		const code = `hello['world'][0]['%32']['valid']`;
 		const expected = `hello.world[0]['%32'].valid;`;
@@ -83,7 +83,7 @@ describe('SAFE: normalizeComputed', async () => {
 	});
 });
 describe('SAFE: normalizeEmptyStatements', async () => {
-	const targetModule = (await import('../src/modules/safe/normalizeEmptyStatements.js')).default;
+	const targetModule = (await import('../dist/modules/safe/normalizeEmptyStatements.js')).default;
 	it('TP-1: Remove standalone empty statements', () => {
 		const code = `;;var a = 3;;`;
 		const expected = `var a = 3;`;
@@ -128,7 +128,7 @@ describe('SAFE: normalizeEmptyStatements', async () => {
 	});
 });
 describe('SAFE: parseTemplateLiteralsIntoStringLiterals', async () => {
-	const targetModule = (await import('../src/modules/safe/parseTemplateLiteralsIntoStringLiterals.js')).default;
+	const targetModule = (await import('../dist/modules/safe/parseTemplateLiteralsIntoStringLiterals.js')).default;
 	it('TP-1: Convert template literal with string expression', () => {
 		const code = '`hello ${"world"}!`;';
 		const expected = `'hello world!';`;
@@ -179,7 +179,7 @@ describe('SAFE: parseTemplateLiteralsIntoStringLiterals', async () => {
 	});
 });
 describe('SAFE: rearrangeSequences', async () => {
-	const targetModule = (await import('../src/modules/safe/rearrangeSequences.js')).default;
+	const targetModule = (await import('../dist/modules/safe/rearrangeSequences.js')).default;
 	it('TP-1: Split sequenced calls to standalone expressions', () => {
 		const code = `function f() { return a(), b(), c(); }`;
 		const expected = `function f() {\n  a();\n  b();\n  return c();\n}`;
@@ -236,7 +236,7 @@ describe('SAFE: rearrangeSequences', async () => {
 	});
 });
 describe('SAFE: rearrangeSwitches', async () => {
-	const targetModule = (await import('../src/modules/safe/rearrangeSwitches.js')).default;
+	const targetModule = (await import('../dist/modules/safe/rearrangeSwitches.js')).default;
 	it('TP-1: Complex switch with multiple cases and return statement', () => {
 		const code = `(() => {let a = 1;\twhile (true) {switch (a) {case 3: return console.log(3); case 2: console.log(2); a = 3; break;
 case 1: console.log(1); a = 2; break;}}})();`;
@@ -313,7 +313,7 @@ case 1: console.log(1); a = 2; break;}}})();`;
 	});
 });
 describe('SAFE: removeDeadNodes', async () => {
-	const targetModule = (await import('../src/modules/safe/removeDeadNodes.js')).default;
+	const targetModule = (await import('../dist/modules/safe/removeDeadNodes.js')).default;
 	it('TP-1', () => {
 		const code = `var a = 3, b = 12; console.log(b);`;
 		const expected = `var b = 12;\nconsole.log(b);`;
@@ -322,7 +322,7 @@ describe('SAFE: removeDeadNodes', async () => {
 	});
 });
 describe('SAFE: replaceCallExpressionsWithUnwrappedIdentifier', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceCallExpressionsWithUnwrappedIdentifier.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceCallExpressionsWithUnwrappedIdentifier.js')).default;
 	it('TP-1: Replace call expression with identifier behind an arrow function', () => {
 		const code = `const a = () => btoa; a()('yo');`;
 		const expected = `const a = () => btoa;\nbtoa('yo');`;
@@ -379,7 +379,7 @@ describe('SAFE: replaceCallExpressionsWithUnwrappedIdentifier', async () => {
 	});
 });
 describe('SAFE: replaceEvalCallsWithLiteralContent', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceEvalCallsWithLiteralContent.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceEvalCallsWithLiteralContent.js')).default;
 	it('TP-1: Replace eval call with the code parsed from the argument string', () => {
 		const code = `eval('console.log("hello world")');`;
 		const expected = `console.log('hello world');`;
@@ -454,7 +454,7 @@ describe('SAFE: replaceEvalCallsWithLiteralContent', async () => {
 	});
 });
 describe('SAFE: replaceFunctionShellsWithWrappedValue', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceFunctionShellsWithWrappedValue.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceFunctionShellsWithWrappedValue.js')).default;
 	it('TP-1: Replace references with identifier', () => {
 		const code = `function a() {return String}\na()(val);`;
 		const expected = `function a() {\n  return String;\n}\nString(val);`;
@@ -523,7 +523,7 @@ describe('SAFE: replaceFunctionShellsWithWrappedValue', async () => {
 	});
 });
 describe('SAFE: replaceFunctionShellsWithWrappedValueIIFE', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceFunctionShellsWithWrappedValueIIFE.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceFunctionShellsWithWrappedValueIIFE.js')).default;
 	it('TP-1: Replace with wrapped value in-place', () => {
 		const code = `(function a() {return String}\n)()(val);`;
 		const expected = `String(val);`;
@@ -598,7 +598,7 @@ describe('SAFE: replaceFunctionShellsWithWrappedValueIIFE', async () => {
 	});
 });
 describe('SAFE: replaceIdentifierWithFixedAssignedValue', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceIdentifierWithFixedAssignedValue.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceIdentifierWithFixedAssignedValue.js')).default;
 	it('TP-1: Replace references with number literal', () => {
 		const code = `const a = 3; const b = a * 2; console.log(b + a);`;
 		const expected = `const a = 3;\nconst b = 3 * 2;\nconsole.log(b + 3);`;
@@ -685,7 +685,7 @@ describe('SAFE: replaceIdentifierWithFixedAssignedValue', async () => {
 	});
 });
 describe('SAFE: replaceIdentifierWithFixedValueNotAssignedAtDeclaration', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceIdentifierWithFixedValueNotAssignedAtDeclaration.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceIdentifierWithFixedValueNotAssignedAtDeclaration.js')).default;
 	it('TP-1: Replace identifier with number literal', () => {
 		const code = `let a; a = 3; const b = a * 2; console.log(b + a);`;
 		const expected = `let a;\na = 3;\nconst b = 3 * 2;\nconsole.log(b + 3);`;
@@ -772,7 +772,7 @@ describe('SAFE: replaceIdentifierWithFixedValueNotAssignedAtDeclaration', async 
 	});
 });
 describe('SAFE: replaceNewFuncCallsWithLiteralContent', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceNewFuncCallsWithLiteralContent.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceNewFuncCallsWithLiteralContent.js')).default;
 	it('TP-1: Replace Function constructor with IIFE', () => {
 		const code = `new Function("!function() {console.log('hello world')}()")();`;
 		const expected = `!(function () {\n  console.log('hello world');\n}());`;
@@ -841,7 +841,7 @@ describe('SAFE: replaceNewFuncCallsWithLiteralContent', async () => {
 	});
 });
 describe('SAFE: replaceBooleanExpressionsWithIf', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceBooleanExpressionsWithIf.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceBooleanExpressionsWithIf.js')).default;
 	it('TP-1: Simple logical AND', () => {
 		const code = `x && y();`;
 		const expected = `if (x) {\n  y();\n}`;
@@ -895,7 +895,7 @@ describe('SAFE: replaceBooleanExpressionsWithIf', async () => {
 	});
 });
 describe('SAFE: replaceSequencesWithExpressions', async () => {
-	const targetModule = (await import('../src/modules/safe/replaceSequencesWithExpressions.js')).default;
+	const targetModule = (await import('../dist/modules/safe/replaceSequencesWithExpressions.js')).default;
 	it('TP-1: Replace sequence with 2 expressions in if statement', () => {
 		const code = `if (a) (b(), c());`;
 		const expected = `if (a) {\n  b();\n  c();\n}`;
@@ -970,7 +970,7 @@ describe('SAFE: replaceSequencesWithExpressions', async () => {
 	});
 });
 describe('SAFE: resolveDeterministicIfStatements', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveDeterministicIfStatements.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveDeterministicIfStatements.js')).default;
 	it('TP-1: Resolve true and false literals', () => {
 		const code = `if (true) do_a(); else do_b(); if (false) do_c(); else do_d();`;
 		const expected = `do_a();\ndo_d();`;
@@ -1057,7 +1057,7 @@ describe('SAFE: resolveDeterministicIfStatements', async () => {
 	});
 });
 describe('SAFE: resolveFunctionConstructorCalls', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveFunctionConstructorCalls.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveFunctionConstructorCalls.js')).default;
 	it('TP-1: Replace Function.constructor with no parameters', () => {
 		const code = `const func = Function.constructor('', "console.log('hello world!');");`;
 		const expected = `const func = function () {\n  console.log('hello world!');\n};`;
@@ -1138,7 +1138,7 @@ describe('SAFE: resolveFunctionConstructorCalls', async () => {
 	});
 });
 describe('SAFE: resolveMemberExpressionReferencesToArrayIndex', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveMemberExpressionReferencesToArrayIndex.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveMemberExpressionReferencesToArrayIndex.js')).default;
 	it('TP-1', () => {
 		const code = `const a = [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3];  b = a[0]; c = a[20];`;
 		const expected = `const a = [\n  1,\n  1,\n  1,\n  1,\n  1,\n  1,\n  1,\n  1,\n  1,\n  1,
@@ -1208,7 +1208,7 @@ describe('SAFE: resolveMemberExpressionReferencesToArrayIndex', async () => {
 	});
 });
 describe('SAFE: resolveMemberExpressionsWithDirectAssignment', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveMemberExpressionsWithDirectAssignment.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveMemberExpressionsWithDirectAssignment.js')).default;
 	it('TP-1: Replace direct property assignments with literal values', () => {
 		const code = `function a() {} a.b = 3; a.c = '5'; console.log(a.b + a.c);`;
 		const expected = `function a() {\n}\na.b = 3;\na.c = '5';\nconsole.log(3 + '5');`;
@@ -1289,7 +1289,7 @@ describe('SAFE: resolveMemberExpressionsWithDirectAssignment', async () => {
 	});
 });
 describe('SAFE: resolveProxyCalls', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveProxyCalls.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveProxyCalls.js')).default;
 	it('TP-1: Replace chained proxy calls with direct function calls', () => {
 		const code = `function call1(a, b) {return a + b;} function call2(c, d) {return call1(c, d);} function call3(e, f) {return call2(e, f);}`;
 		const expected = `function call1(a, b) {\n  return a + b;\n}\nfunction call2(c, d) {\n  return call1(c, d);\n}\nfunction call3(e, f) {\n  return call1(e, f);\n}`;
@@ -1364,7 +1364,7 @@ describe('SAFE: resolveProxyCalls', async () => {
 	});
 });
 describe('SAFE: resolveProxyReferences', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveProxyReferences.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveProxyReferences.js')).default;
 	it('TP-1: Replace proxy reference with direct reference', () => {
 		const code = `const a = ['']; const b = a; const c = b[0];`;
 		const expected = `const a = [''];\nconst b = a;\nconst c = a[0];`;
@@ -1463,7 +1463,7 @@ describe('SAFE: resolveProxyReferences', async () => {
 	});
 });
 describe('SAFE: resolveProxyVariables', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveProxyVariables.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveProxyVariables.js')).default;
 	it('TP-1: Replace proxy variable references with target identifier', () => {
 		const code = `const a2b = atob; console.log(a2b('NDI='));`;
 		const expected = `console.log(atob('NDI='));`;
@@ -1532,7 +1532,7 @@ describe('SAFE: resolveProxyVariables', async () => {
 	});
 });
 describe('SAFE: resolveRedundantLogicalExpressions', async () => {
-	const targetModule = (await import('../src/modules/safe/resolveRedundantLogicalExpressions.js')).default;
+	const targetModule = (await import('../dist/modules/safe/resolveRedundantLogicalExpressions.js')).default;
 	it('TP-1: Simplify basic true and false literals with && and ||', () => {
 		const code = `if (false && true) {} if (false || true) {} if (true && false) {} if (true || false) {}`;
 		const expected = `if (false) {\n}\nif (true) {\n}\nif (false) {\n}\nif (true) {\n}`;
@@ -1619,7 +1619,7 @@ describe('SAFE: resolveRedundantLogicalExpressions', async () => {
 	});
 });
 describe('SAFE: unwrapFunctionShells', async () => {
-	const targetModule = (await import('../src/modules/safe/unwrapFunctionShells.js')).default;
+	const targetModule = (await import('../dist/modules/safe/unwrapFunctionShells.js')).default;
 	it('TP-1: Unwrap and rename', () => {
 		const code = `function a(x) {return function b() {return x + 3}.apply(this, arguments);}`;
 		const expected = `function b(x) {\n  return x + 3;\n}`;
@@ -1712,7 +1712,7 @@ describe('SAFE: unwrapFunctionShells', async () => {
 	});
 });
 describe('SAFE: unwrapIIFEs', async () => {
-	const targetModule = (await import('../src/modules/safe/unwrapIIFEs.js')).default;
+	const targetModule = (await import('../dist/modules/safe/unwrapIIFEs.js')).default;
 	it('TP-1: Arrow functions', () => {
 		const code = `var a = (() => {
       return b => {
@@ -1794,7 +1794,7 @@ describe('SAFE: unwrapIIFEs', async () => {
 	});
 });
 describe('SAFE: unwrapSimpleOperations', async () => {
-	const targetModule = (await import('../src/modules/safe/unwrapSimpleOperations.js')).default;
+	const targetModule = (await import('../dist/modules/safe/unwrapSimpleOperations.js')).default;
 	it('TP-1: Binary operations', () => {
 		const code = `function add(b,c){return b + c;}
 function minus(b,c){return b - c;}
@@ -2021,7 +2021,7 @@ typeof 1;
 	});
 });
 describe('SAFE: separateChainedDeclarators', async () => {
-	const targetModule = (await import('../src/modules/safe/separateChainedDeclarators.js')).default;
+	const targetModule = (await import('../dist/modules/safe/separateChainedDeclarators.js')).default;
 	it('TP-1: A single const', () => {
 		const code = `const foo = 5, bar = 7;`;
 		const expected = `const foo = 5;\nconst bar = 7;`;
@@ -2108,7 +2108,7 @@ describe('SAFE: separateChainedDeclarators', async () => {
 	});
 });
 describe('SAFE: simplifyCalls', async () => {
-	const targetModule = (await import('../src/modules/safe/simplifyCalls.js')).default;
+	const targetModule = (await import('../dist/modules/safe/simplifyCalls.js')).default;
 	it('TP-1: With args', () => {
 		const code = `func1.apply(this, [arg1, arg2]); func2.call(this, arg1, arg2);`;
 		const expected = `func1(arg1, arg2);\nfunc2(arg1, arg2);`;
@@ -2183,7 +2183,7 @@ describe('SAFE: simplifyCalls', async () => {
 	});
 });
 describe('SAFE: simplifyIfStatements', async () => {
-	const targetModule = (await import('../src/modules/safe/simplifyIfStatements.js')).default;
+	const targetModule = (await import('../dist/modules/safe/simplifyIfStatements.js')).default;
 	it('TP-1: Empty blocks', () => {
 		const code = `if (J) {} else {}`;
 		const expected = `J;`;

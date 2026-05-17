@@ -4,9 +4,7 @@
   "description": "Deobfuscate Javascript with emphasis on reconstructing strings",
   "main": "index.js",
   "type": "module",
-  "bin": {
-    "restringer": "./bin/deobfuscate.js"
-  },
+  "bin": "./bin/deobfuscate.js",
   "files": [
     "index.js",
     "bin",
@@ -19,12 +17,13 @@
     "test": "tests"
   },
   "dependencies": {
-    "commander": "^14.0.2",
-    "flast": "2.2.5",
-    "isolated-vm": "5.0.4",
-    "obfuscation-detector": "^2.0.7"
+    "commander": "^14.0.3",
+    "flast": "^3.0.0",
+    "isolated-vm": "6.1.2",
+    "obfuscation-detector": "^3.0.0"
   },
   "scripts": {
+    "build": "npm exec -- tsc",
     "test": "node --test --trace-warnings --no-node-snapshot",
     "test:coverage": "node --test --trace-warnings --no-node-snapshot --experimental-test-coverage",
     "test:quick": "node --test --trace-warnings --no-node-snapshot tests/functionality.test.js tests/modules.*.test.js tests/processors.test.js tests/utils.test.js tests/deobfuscation.test.js",
@@ -49,10 +48,13 @@
   },
   "homepage": "https://github.com/HumanSecurity/restringer#readme",
   "devDependencies": {
-    "@babel/eslint-parser": "^7.28.5",
-    "@babel/plugin-syntax-import-assertions": "^7.27.1",
-    "eslint": "^9.39.1",
-    "globals": "^16.5.0",
-    "husky": "^9.1.7"
+    "@babel/eslint-parser": "^7.28.1",
+    "@babel/plugin-syntax-import-assertions": "^7.28.6",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^25.8.0",
+    "eslint": "^9.39.4",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3"
   }
 }
