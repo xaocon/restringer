@@ -134,8 +134,12 @@ export function parseArgs(args) {
 		
 		// Validate required input filename (unless help is requested)
 		if (!hasHelp && (!opts.inputFilename || opts.inputFilename.length === 0)) {
-			throw new Error('missing required argument \'input_filename\'');
+			program.addHelpText('before', '** You must enter a filename **\n');
+			program.outputHelp();
+			process.exit(1);
 		}
+
+		if (opts.help) program.outputHelp();
 		
 		return opts;
 	} catch (error) {
