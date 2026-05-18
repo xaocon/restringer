@@ -1,5 +1,5 @@
 // @ts-check
-
+import { Arborist } from 'flast';
 /**
  * Find all return statements and if statements that contain sequence expressions.
  * @param {Arborist} arb
@@ -102,7 +102,7 @@ export function rearrangeSequencesTransform(arb, node) {
  * @param {Function} [candidateFilter] a filter to apply on the candidates list. Defaults to true.
  * @return {Arborist}
  */
-export default function rearrangeSequences(arb, candidateFilter = () => true) {
+export default function rearrangeSequences(arb: Arborist, candidateFilter = () => true): Arborist {
 	const matchingNodes = rearrangeSequencesMatch(arb, candidateFilter);
 	
 	for (let i = 0; i < matchingNodes.length; i++) {

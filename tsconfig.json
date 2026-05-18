@@ -5,7 +5,9 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": ["node"],
+    "lib": ["es2022"]
   },
   "extends": "@tsconfig/node24/tsconfig.json",
   "include": ["./src/**/*.ts"],

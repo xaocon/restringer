@@ -1,6 +1,7 @@
 // @ts-check
 
 import {getDescendants} from '../utils/getDescendants.js';
+import { Arborist } from 'flast';
 
 const MAX_REPETITION = 50;
 
